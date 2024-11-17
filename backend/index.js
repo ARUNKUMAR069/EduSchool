@@ -39,7 +39,7 @@ const admissionSchema = new mongoose.Schema({
 const Admission = mongoose.model('Admission', admissionSchema);
 
 // Route to handle admission form submissions (POST)
-app.post('/api/admissions', async (req, res) => {
+app.post('/admissions', async (req, res) => {
   const { name, dob, gender, grade, fatherName, motherName, contact, email, address, additionalInfo } = req.body;
 
   if (!name || !dob || !gender || !grade || !fatherName || !motherName || !contact || !email || !address) {
@@ -69,7 +69,7 @@ app.post('/api/admissions', async (req, res) => {
 });
 
 // Route to get all admissions (GET)
-app.get('/api/admissions', async (req, res) => {
+app.get('/admissions', async (req, res) => {
   try {
     const admissions = await Admission.find().sort({ createdAt: -1 });
     res.status(200).json({ success: true, admissions });
@@ -121,3 +121,9 @@ app.get('/', (req, res) => {
 
 // Export the Express app for Vercel
 module.exports = app;
+
+// ----------- Server Setup -----------
+const port = process.env.PORT || 5000;
+app.listen(port, () => {
+  console.log(`Server is running on port ${port}`);
+});
