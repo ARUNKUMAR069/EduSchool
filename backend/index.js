@@ -42,7 +42,7 @@ const admissionSchema = new mongoose.Schema({
 const Admission = mongoose.model('Admission', admissionSchema);
 
 // Route to handle admission form submissions (POST)
-app.post('/api/admissions', async (req, res) => {
+app.post('admissions', async (req, res) => {
   const {
     name,
     dob,
@@ -95,7 +95,7 @@ app.post('/api/admissions', async (req, res) => {
 });
 
 // Route to get all submitted admission forms (GET)
-app.get('/api/admissions', async (req, res) => {
+app.get('admissions', async (req, res) => {
   try {
     const admissions = await Admission.find().sort({ createdAt: -1 });
     res.status(200).json({ success: true, admissions });
