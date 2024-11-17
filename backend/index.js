@@ -3,20 +3,17 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-require('dotenv').config();
 const Razorpay = require('razorpay');
+require('dotenv').config();
 
-// Initialize Express app
 const app = express();
 
 // Middleware setup
 app.use(cors());
 app.use(bodyParser.json());
 
-// MongoDB connection string (use the environment variable)
+// MongoDB connection
 const dbURI = process.env.MONGO_URI;
-
-// Connect to MongoDB using Mongoose
 mongoose
   .connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.log('Connected to MongoDB'))
@@ -24,7 +21,7 @@ mongoose
 
 // ----------- Admission Form Schema and Routes -----------
 
-// Define the Admission schema and model
+// Define the Admission Schema
 const admissionSchema = new mongoose.Schema({
   name: { type: String, required: true },
   dob: { type: String, required: true },
@@ -42,37 +39,14 @@ const admissionSchema = new mongoose.Schema({
 const Admission = mongoose.model('Admission', admissionSchema);
 
 // Route to handle admission form submissions (POST)
-app.post('admissions', async (req, res) => {
-  const {
-    name,
-    dob,
-    gender,
-    grade,
-    fatherName,
-    motherName,
-    contact,
-    email,
-    address,
-    additionalInfo
-  } = req.body;
+app.post('/api/admissions', async (req, res) => {
+  const { name, dob, gender, grade, fatherName, motherName, contact, email, address, additionalInfo } = req.body;
 
-  // Validate input fields
-  if (
-    !name ||
-    !dob ||
-    !gender ||
-    !grade ||
-    !fatherName ||
-    !motherName ||
-    !contact ||
-    !email ||
-    !address
-  ) {
+  if (!name || !dob || !gender || !grade || !fatherName || !motherName || !contact || !email || !address) {
     return res.status(400).json({ success: false, message: 'All required fields must be filled.' });
   }
 
   try {
-    // Save admission data to the database
     const newAdmission = new Admission({
       name,
       dob,
@@ -94,8 +68,8 @@ app.post('admissions', async (req, res) => {
   }
 });
 
-// Route to get all submitted admission forms (GET)
-app.get('admissions', async (req, res) => {
+// Route to get all admissions (GET)
+app.get('/api/admissions', async (req, res) => {
   try {
     const admissions = await Admission.find().sort({ createdAt: -1 });
     res.status(200).json({ success: true, admissions });
@@ -105,16 +79,14 @@ app.get('admissions', async (req, res) => {
   }
 });
 
-// ----------- Razorpay Donation Routes (existing code) -----------
+// ----------- Razorpay Donation Routes -----------
 
-// Razorpay instance setup
 const razorpay = new Razorpay({
   key_id: process.env.RAZORPAY_KEY_ID,
   key_secret: process.env.RAZORPAY_KEY_SECRET
 });
 
-// POST route for handling UPI donations
-app.post('/donation', async (req, res) => {
+app.post('/api/donation', async (req, res) => {
   const { name, email, amount } = req.body;
 
   if (!name || !email || !amount) {
@@ -147,8 +119,5 @@ app.get('/', (req, res) => {
   res.send('Welcome to the Edu School API!');
 });
 
-// ----------- Server Setup -----------
-const port = process.env.PORT || 5000;
-app.listen(port, () => {
-  console.log(`Server is running on port ${port}`);
-});
+// Export the Express app for Vercel
+module.exports = app;
