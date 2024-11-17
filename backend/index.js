@@ -3,7 +3,6 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-const Razorpay = require('razorpay');
 require('dotenv').config();
 
 const app = express();
@@ -20,8 +19,6 @@ mongoose
   .catch((err) => console.error('Error connecting to MongoDB:', err));
 
 // ----------- Admission Form Schema and Routes -----------
-
-// Define the Admission Schema
 const admissionSchema = new mongoose.Schema({
   name: { type: String, required: true },
   dob: { type: String, required: true },
@@ -47,19 +44,7 @@ app.post('/admissions', async (req, res) => {
   }
 
   try {
-    const newAdmission = new Admission({
-      name,
-      dob,
-      gender,
-      grade,
-      fatherName,
-      motherName,
-      contact,
-      email,
-      address,
-      additionalInfo
-    });
-
+    const newAdmission = new Admission({ name, dob, gender, grade, fatherName, motherName, contact, email, address, additionalInfo });
     await newAdmission.save();
     res.status(200).json({ success: true, message: 'Admission form submitted successfully!' });
   } catch (err) {
@@ -79,41 +64,6 @@ app.get('/admissions', async (req, res) => {
   }
 });
 
-// ----------- Razorpay Donation Routes -----------
-
-// const razorpay = new Razorpay({
-//   key_id: process.env.RAZORPAY_KEY_ID,
-//   key_secret: process.env.RAZORPAY_KEY_SECRET
-// });
-
-// app.post('donation', async (req, res) => {
-//   const { name, email, amount } = req.body;
-
-//   if (!name || !email || !amount) {
-//     return res.status(400).json({ success: false, message: 'All fields are required.' });
-//   }
-
-//   try {
-//     const options = {
-//       amount: amount * 100,
-//       currency: 'INR',
-//       receipt: `receipt_${Date.now()}`
-//     };
-
-//     const order = await razorpay.orders.create(options);
-//     const upiPaymentLink = `upi://pay?pa=${process.env.UPI_ID}&pn=${name}&am=${amount}&cu=INR`;
-
-//     res.status(200).json({
-//       success: true,
-//       message: 'UPI Payment initiated successfully!',
-//       paymentLink: upiPaymentLink
-//     });
-//   } catch (error) {
-//     console.error('Error creating payment order:', error);
-//     res.status(500).json({ success: false, message: 'Server error. Please try again later.' });
-//   }
-// });
-
 // Default route
 app.get('/', (req, res) => {
   res.send('Welcome to the Edu School API!');
@@ -121,9 +71,3 @@ app.get('/', (req, res) => {
 
 // Export the Express app for Vercel
 module.exports = app;
-
-// ----------- Server Setup -----------
-const port = process.env.PORT || 5000;
-app.listen(port, () => {
-  console.log(`Server is running on port ${port}`);
-});
