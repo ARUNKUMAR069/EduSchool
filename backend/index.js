@@ -85,7 +85,7 @@ app.get('/admissions', async (req, res) => {
   });
   const Message = mongoose.model('Message', messageSchema);
   // POST route for sending contact form submissions
-  app.post('/send-message', async (req, res) => {
+  app.post('/sendmessage', async (req, res) => {
     const { name, email, message } = req.body;
     // Validate input fields
     if (!name || !email || !message) {
