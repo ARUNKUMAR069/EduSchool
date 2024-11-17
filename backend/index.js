@@ -81,38 +81,38 @@ app.get('/admissions', async (req, res) => {
 
 // ----------- Razorpay Donation Routes -----------
 
-const razorpay = new Razorpay({
-  key_id: process.env.RAZORPAY_KEY_ID,
-  key_secret: process.env.RAZORPAY_KEY_SECRET
-});
+// const razorpay = new Razorpay({
+//   key_id: process.env.RAZORPAY_KEY_ID,
+//   key_secret: process.env.RAZORPAY_KEY_SECRET
+// });
 
-app.post('/api/donation', async (req, res) => {
-  const { name, email, amount } = req.body;
+// app.post('donation', async (req, res) => {
+//   const { name, email, amount } = req.body;
 
-  if (!name || !email || !amount) {
-    return res.status(400).json({ success: false, message: 'All fields are required.' });
-  }
+//   if (!name || !email || !amount) {
+//     return res.status(400).json({ success: false, message: 'All fields are required.' });
+//   }
 
-  try {
-    const options = {
-      amount: amount * 100,
-      currency: 'INR',
-      receipt: `receipt_${Date.now()}`
-    };
+//   try {
+//     const options = {
+//       amount: amount * 100,
+//       currency: 'INR',
+//       receipt: `receipt_${Date.now()}`
+//     };
 
-    const order = await razorpay.orders.create(options);
-    const upiPaymentLink = `upi://pay?pa=${process.env.UPI_ID}&pn=${name}&am=${amount}&cu=INR`;
+//     const order = await razorpay.orders.create(options);
+//     const upiPaymentLink = `upi://pay?pa=${process.env.UPI_ID}&pn=${name}&am=${amount}&cu=INR`;
 
-    res.status(200).json({
-      success: true,
-      message: 'UPI Payment initiated successfully!',
-      paymentLink: upiPaymentLink
-    });
-  } catch (error) {
-    console.error('Error creating payment order:', error);
-    res.status(500).json({ success: false, message: 'Server error. Please try again later.' });
-  }
-});
+//     res.status(200).json({
+//       success: true,
+//       message: 'UPI Payment initiated successfully!',
+//       paymentLink: upiPaymentLink
+//     });
+//   } catch (error) {
+//     console.error('Error creating payment order:', error);
+//     res.status(500).json({ success: false, message: 'Server error. Please try again later.' });
+//   }
+// });
 
 // Default route
 app.get('/', (req, res) => {
