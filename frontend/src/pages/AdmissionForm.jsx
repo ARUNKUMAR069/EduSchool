@@ -61,15 +61,18 @@ const AdmissionForm = () => {
   }, []);
 
   return (
-    <div className="relative h-[100vh] bg-gradient-to-r from-blue-900 via-purple-900 to-black text-white flex flex-col items-center justify-center ">
-      <Navbar />
-      <div className="absolute top-0 left-0 w-full h-full overflow-hidden z-0 bt-10">
+    
+
+      
+    <div className="relative h-[140vh] bg-gradient-to-r from-blue-900 via-purple-900 to-black text-white flex flex-col items-center justify-center p-5 ">
+    
+      <div className="absolute w-full h-full overflow-hidden z-0 bt-10 p-5">
         <div className="stars"></div>
       </div>
       <form
         onSubmit={handleSubmit}
         className="form-container bg-gray-900 p-10 rounded-lg shadow-2xl w-full max-w-4xl z-10"
-      >
+        >
         <h2 className="text-4xl font-bold text-center mb-6">Admission Form</h2>
 
         <div className="grid grid-cols-2 gap-6">
@@ -85,7 +88,7 @@ const AdmissionForm = () => {
               placeholder="Enter full name"
               className="w-full px-4 py-2 rounded-md bg-gray-800 text-white focus:outline-none"
               required
-            />
+              />
           </div>
 
           <div className="form-field">
@@ -99,7 +102,7 @@ const AdmissionForm = () => {
               onChange={handleChange}
               className="w-full px-4 py-2 rounded-md bg-gray-800 text-white focus:outline-none"
               required
-            />
+              />
           </div>
 
           <div className="form-field">
@@ -112,7 +115,7 @@ const AdmissionForm = () => {
               onChange={handleChange}
               className="w-full px-4 py-2 rounded-md bg-gray-800 text-white focus:outline-none"
               required
-            >
+              >
               <option value="" disabled>
                 Select gender
               </option>
@@ -132,7 +135,7 @@ const AdmissionForm = () => {
               onChange={handleChange}
               className="w-full px-4 py-2 rounded-md bg-gray-800 text-white focus:outline-none"
               required
-            >
+              >
               <option value="" disabled>
                 Select grade
               </option>
@@ -170,7 +173,7 @@ const AdmissionForm = () => {
               placeholder="Enter father's name"
               className="w-full px-4 py-2 rounded-md bg-gray-800 text-white focus:outline-none"
               required
-            />
+              />
           </div>
 
           <div className="form-field">
@@ -185,7 +188,7 @@ const AdmissionForm = () => {
               placeholder="Enter mother's name"
               className="w-full px-4 py-2 rounded-md bg-gray-800 text-white focus:outline-none"
               required
-            />
+              />
           </div>
 
           <div className="form-field">
@@ -200,7 +203,7 @@ const AdmissionForm = () => {
               placeholder="Enter contact number"
               className="w-full px-4 py-2 rounded-md bg-gray-800 text-white focus:outline-none"
               required
-            />
+              />
           </div>
 
           <div className="form-field">
@@ -215,7 +218,7 @@ const AdmissionForm = () => {
               placeholder="Enter email address"
               className="w-full px-4 py-2 rounded-md bg-gray-800 text-white focus:outline-none"
               required
-            />
+              />
           </div>
         </div>
 
@@ -230,7 +233,7 @@ const AdmissionForm = () => {
             placeholder="Enter residential address"
             className="w-full px-4 py-2 rounded-md bg-gray-800 text-white focus:outline-none"
             required
-          ></textarea>
+            ></textarea>
         </div>
 
         <div className="form-field mt-4">
@@ -243,18 +246,19 @@ const AdmissionForm = () => {
             onChange={handleChange}
             placeholder="Any additional information"
             className="w-full px-4 py-2 rounded-md bg-gray-800 text-white focus:outline-none"
-          ></textarea>
+            ></textarea>
         </div>
 
         <button
           type="submit"
           className="w-full py-3 bg-green-600 hover:bg-green-700 text-white font-medium rounded-md mt-6"
-        >
+          >
           Submit Application
         </button>
       </form>
      
     </div>
+          
   );
 };
 

@@ -4,7 +4,6 @@ import { FaBars, FaTimes } from 'react-icons/fa';
 import { NavLink, useNavigate } from 'react-router-dom';
 import gsap from 'gsap';
 
-
 const Navbar = () => {
     const [menuOpen, setMenuOpen] = useState(false);
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -31,20 +30,19 @@ const Navbar = () => {
         if (menuOpen) {
             gsap.to('.mobile-menu', {
                 height: 'auto',
+                opacity: 1,
                 duration: 0.5,
                 ease: 'power3.out',
             });
         } else {
             gsap.to('.mobile-menu', {
                 height: 0,
+                opacity: 0,
                 duration: 0.5,
                 ease: 'power3.in',
             });
         }
     }, [menuOpen]);
-
-    // Handle navigation to Dashboard
-
 
     return (
         <nav className="navbar w-full h-16 px-4 bg-gray-900 text-white fixed top-0 z-50 shadow-md flex justify-between items-center">
@@ -68,7 +66,6 @@ const Navbar = () => {
                     to="/dashboard"
                     className="nav-item hover:text-blue-400 cursor-pointer"
                     activeClassName="text-blue-400"
-
                 >
                     Dashboard
                 </NavLink>
@@ -79,9 +76,6 @@ const Navbar = () => {
                 >
                     Gallery
                 </NavLink>
-
-
-
                 <NavLink
                     to="/contact"
                     className="nav-item hover:text-blue-400 cursor-pointer"
@@ -96,7 +90,6 @@ const Navbar = () => {
                 >
                     About
                 </NavLink>
-
             </div>
 
             {/* Right: User Button */}
@@ -120,7 +113,7 @@ const Navbar = () => {
 
             {/* Mobile Menu */}
             <div
-                className={`mobile-menu lg:hidden bg-gray-800 overflow-hidden flex flex-col space-y-4 p-4 absolute top-16 w-full`}
+                className={`mobile-menu lg:hidden bg-gray-800 overflow-hidden flex flex-col space-y-4 p-4 absolute top-16 w-full ${menuOpen ? 'block' : 'hidden'}`}
             >
                 <NavLink
                     to="/"
@@ -130,9 +123,16 @@ const Navbar = () => {
                     Home
                 </NavLink>
                 <NavLink
-                    to="/gallery"
+                    to="/dashboard"
                     className="nav-item hover:text-blue-400 cursor-pointer"
                     activeClassName="text-blue-400"
+                >
+                    Dashboard
+                </NavLink>
+                <NavLink
+                    to="/gallery"
+                    className="hover:text-blue-400 cursor-pointer"
+                    onClick={() => setMenuOpen(false)}
                 >
                     Gallery
                 </NavLink>
@@ -144,18 +144,11 @@ const Navbar = () => {
                     Contact
                 </NavLink>
                 <NavLink
-                    to="/login"
+                    to="/about"
                     className="hover:text-blue-400 cursor-pointer"
                     onClick={() => setMenuOpen(false)}
                 >
-                    Login
-                </NavLink>
-                <NavLink
-                    to="/register"
-                    className="hover:text-blue-400 cursor-pointer"
-                    onClick={() => setMenuOpen(false)}
-                >
-                    Register
+                    About
                 </NavLink>
                 <div className="mt-4">
                     <div className="max-w-[60px] max-h-[60px] mx-auto">
@@ -163,9 +156,6 @@ const Navbar = () => {
                     </div>
                 </div>
             </div>
-
-            {/* Custom Modal for Authentication */}
-
         </nav>
     );
 };

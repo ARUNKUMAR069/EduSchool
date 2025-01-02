@@ -1,11 +1,14 @@
 import React, { useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import Navbar from '@/components/ui/Navbar';
-import { SignedIn, SignInButton } from '@clerk/clerk-react';
+import { SignedIn, SignedOut, SignInButton } from '@clerk/clerk-react';
+import { useNavigate } from 'react-router-dom';
 import gsap from 'gsap';
 import Footer from '@/components/ui/Footer';
 
 export const HomePage = () => {
+    const navigate = useNavigate();
+
     useEffect(() => {
         // GSAP animation for stars
         gsap.to('.star', {
@@ -50,10 +53,6 @@ export const HomePage = () => {
                 ))}
             </div>
 
-
-           
-
-
             {/* Landing Content */}
             <div className="relative flex flex-col items-center justify-center min-h-screen z-10 text-center">
                 <h1 className="text-4xl md:text-6xl font-extrabold text-white leading-tight mb-6 cta">
@@ -62,15 +61,28 @@ export const HomePage = () => {
                 <p className="text-lg md:text-2xl text-gray-300 mb-8 cta">
                     Discover a world of learning and innovation. Join us today and unlock your potential.
                 </p>
-                <Button className="px-8 py-4 text-lg font-bold bg-blue-500 hover:bg-blue-700 rounded-md shadow-md cta">
-                    <SignInButton mode="modal" forceRedirectUrl="/dashboard">
-                        <span className="text-white">Get Started</span>
-                    </SignInButton>
-                </Button>
+
+                {/* Button based on authentication */}
+                <SignedOut>
+                    <Button className="px-8 py-4 text-lg font-bold bg-blue-500 hover:bg-blue-700 rounded-md shadow-md cta">
+                        <SignInButton mode="modal" forceRedirectUrl="/dashboard">
+                            <span className="text-white">Get Started</span>
+                        </SignInButton>
+                    </Button>
+                </SignedOut>
+
+                <SignedIn>
+                    <Button
+                        onClick={() => navigate('/dashboard')}
+                        className="px-8 py-4 text-lg font-bold bg-green-500 hover:bg-green-700 rounded-md shadow-md cta"
+                    >
+                        Explore Now
+                    </Button>
+                </SignedIn>
             </div>
 
             {/* Footer */}
-           <Footer/>
+            <Footer />
 
             {/* Animations */}
             <style jsx>{`

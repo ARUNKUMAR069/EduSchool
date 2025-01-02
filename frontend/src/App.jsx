@@ -10,6 +10,7 @@ import About from './pages/About'
 import Gallery from './pages/Gallery'
 import DonationForm from './pages/DoantionForm'
 import AdmissionForm from './pages/AdmissionForm'
+import Navbar from './components/ui/Navbar'
 
 function App() {
   //  Routing
@@ -68,19 +69,19 @@ function App() {
 
         <Route path='/donation' element={<>
 
-<SignedIn>
-  <DonationForm/>
-</SignedIn>
-<SignedOut>
-  {<RedirectToSignIn />}
-</SignedOut>
+          <SignedIn>
+            <DonationForm />
+          </SignedIn>
+          <SignedOut>
+            {<RedirectToSignIn />}
+          </SignedOut>
 
 
 
-</>} />
+        </>} />
 
-<Route path='/admission' element={<AdmissionForm/>} />
-  </>
+        <Route path='/admission' element={<>    <Navbar/>  <AdmissionForm />  </>} />
+      </>
     )
 
   )
